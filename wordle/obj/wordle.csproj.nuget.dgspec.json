@@ -1,0 +1,67 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj": {}
+  },
+  "projects": {
+    "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj",
+        "projectName": "wordle",
+        "projectPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj",
+        "packagesPath": "/Users/michaeljupin/.nuget/packages/",
+        "outputPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/michaeljupin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/Cellar/dotnet/8.0.0/libexec/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
