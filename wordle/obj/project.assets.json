@@ -5695,11 +5695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj",
+      "projectUniqueName": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/wordle/wordle.csproj",
       "projectName": "wordle",
-      "projectPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj",
+      "projectPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/wordle/wordle.csproj",
       "packagesPath": "/Users/michaeljupin/.nuget/packages/",
-      "outputPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/obj/",
+      "outputPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/wordle/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/michaeljupin/.nuget/NuGet/NuGet.Config"

@@ -138,25 +138,82 @@ namespace wordle
 
         private void Check(ref string correctWord, ref string userGuess)
         {
+            Console.Clear();
+            //I gooled Dictionary to come up with a coloring solution that follows real Wordle rules
+            Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
+            foreach (char letter in correctWord)
+            {
+                if (answerCharCounts.ContainsKey(letter))
+                {
+                    answerCharCounts[letter]++;
+                }
+                else
+                {
+                    answerCharCounts[letter] = 1;
+                }
+            }
+
             for (int i = 0; i < correctWord.Length; i++)
             {
-                if (correctWord[i] == userGuess[i])
+                char guessLetter = userGuess[i];
+                char answerLetter = correctWord[i];
+                if (guessLetter == answerLetter)
                 {
                     colorWordOne[i] = "G";
+                    answerCharCounts[guessLetter]--;
                 }
-                else if (correctWord.Contains(userGuess[i])) //This is the part i researched, I did not know about Contains
+                else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    colorWordOne[i] = "Y";
-                }
-                else if (correctWord[i] == userGuess[i] && correctWord.Contains(userGuess[i]))
-                {
-                    if (correctWord[i] == userGuess[i])
+                    bool hasGreen = false;
+                    for (int index = 0; index < colorWordOne.Length; index++)
                     {
-                        colorWordOne[i] = "G";
+                        if (colorWordOne[index] == "G" && index != i && userGuess[index] == guessLetter)
+                        {
+                            hasGreen = true;
+                            break;
+                        }
                     }
-                    else if (correctWord.Contains(userGuess[i]))
+
+                    if (hasGreen)
                     {
-                        colorWordOne[i] = "W";
+                        colorWordOne[i] = "Y"; // Second occurrence becomes yellow
+                    }
+                    else
+                    {
+                        colorWordOne[i] = "Y"; // First occurrence becomes yellow
+                    }
+                    answerCharCounts[guessLetter]--;
+                }
+                else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
+                {
+                    bool hasGreen = false;
+                    bool hasSecondGreen = false;
+                    for (int index = 0; index < colorWordOne.Length; index++)
+                    {
+                        if (colorWordOne[index] == "G" && index != i && userGuess[index] == guessLetter)
+                        {
+                            if (!hasGreen)
+                            {
+                                hasGreen = true;
+                            }
+                            else if (!hasSecondGreen)
+                            {
+                                hasSecondGreen = true;
+                            }
+                            else
+                            {
+                                colorWordOne[i] = "Y"; // Third occurrence becomes yellow
+                                return;
+                            }
+                        }
+                    }
+                    if (hasSecondGreen)
+                    {
+                        colorWordOne[i] = "Y"; // Second occurrence becomes yellow
+                    }
+                    else if (hasGreen)
+                    {
+                        colorWordOne[i] = "G"; // First occurrence becomes green
                     }
                 }
                 else
@@ -230,7 +287,6 @@ namespace wordle
         •                                              
         ••••••••••••••••••••••               
         ");
-
             Console.SetCursorPosition(11, 2);
             for (int i = 0; i < userGuess.Length; i++)
             {
@@ -409,7 +465,7 @@ namespace wordle
                 Console.ForegroundColor = GetColorLetterTwo(ref colorWordTwo[i]);
                 Console.Write(userGuessTwo[i]);
                 Console.ResetColor();
-                Console.Write(" • "); //laxly
+                Console.Write(" • ");
             }
             Console.ForegroundColor = ConsoleColor.White;
             System.Console.Write(@"
@@ -461,7 +517,7 @@ namespace wordle
                 Console.ForegroundColor = GetColorLetterTwo(ref colorWordTwo[i]);
                 Console.Write(userGuessTwo[i]);
                 Console.ResetColor();
-                Console.Write(" • "); //laxly
+                Console.Write(" • ");
             }
             Console.ForegroundColor = ConsoleColor.White;
             System.Console.Write(@"

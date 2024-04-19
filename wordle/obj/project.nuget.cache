@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BTCdVlak6VWQ6w/NYZXlPlFR6KqskFMiFUDZwYuffJWylbNZZeAvjAms4Zl2QC7tT++3I94v0G4SB0ctFB8iZg==",
+  "dgSpecHash": "Ei6Sb5bbkoM+4BSd3v5fC51PSwQ/s5U5Dqshy+BW45TBidzO1uo+YEU9riKHGiWXk6omga9AVG7cuSYf17xLQw==",
   "success": true,
-  "projectFilePath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/wordle/wordle.csproj",
+  "projectFilePath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/wordle/wordle.csproj",
   "expectedPackageFiles": [
     "/Users/michaeljupin/.nuget/packages/humanizer/2.14.1/humanizer.2.14.1.nupkg.sha512",
     "/Users/michaeljupin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
