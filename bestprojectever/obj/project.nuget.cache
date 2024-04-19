@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qhoFMKoGtBovYQ0cib0nSU4ehCCWTehVgCT0+/5bIZ6+kWZCr5KAXQVM0YDdkTYF3CZIqk39waHtR4rkB2ztbA==",
+  "dgSpecHash": "Zf0s71FqupWMf6OgpgWdRv9pBcjdN6Bs8wzN6IpM2qtRLizxkiLJkJ9t08FpRFNJ+HaM4VrFJppPbLA0H/L+XQ==",
   "success": true,
-  "projectFilePath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/bestprojectever/bestprojectever.csproj",
+  "projectFilePath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/bestprojectever/bestprojectever.csproj",
   "expectedPackageFiles": [
     "/Users/michaeljupin/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/michaeljupin/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",

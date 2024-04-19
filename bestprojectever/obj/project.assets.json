@@ -8293,11 +8293,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/bestprojectever/bestprojectever.csproj",
+      "projectUniqueName": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/bestprojectever/bestprojectever.csproj",
       "projectName": "bestprojectever",
-      "projectPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/bestprojectever/bestprojectever.csproj",
+      "projectPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/bestprojectever/bestprojectever.csproj",
       "packagesPath": "/Users/michaeljupin/.nuget/packages/",
-      "outputPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/bestprojectever/obj/",
+      "outputPath": "/Users/michaeljupin/Library/CloudStorage/OneDrive-TheUniversityofAlabama/MIS221Class/CGI Project/projetcCGI/bestprojectever/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/michaeljupin/.nuget/NuGet/NuGet.Config"
