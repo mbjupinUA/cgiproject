@@ -8,12 +8,11 @@ namespace wordle
     {
         public static async Task<string> Start()
         {
-            GameHandler gameHandler = new GameHandler() { Words = "HELLOS" };
+            GameHandler gameHandler = new GameHandler() { Words = "HELLO" };
 
             using (HttpClient client = new HttpClient())
             {
                 var wordssss = await client.GetStringAsync("http://localhost:5088/api/word");
-                Console.WriteLine($"Word: {wordssss}");
                 string correctWord = wordssss;
                 await GetWords(correctWord);
                 return correctWord;
@@ -22,9 +21,6 @@ namespace wordle
 
         private static async Task GetWords(string correctWord)
         {
-            Console.WriteLine(correctWord);
-            Console.WriteLine("Press Enter to get a new word");
-            Console.ReadLine();
             Word word = new Word();
             word.Wordle(correctWord);
         }
