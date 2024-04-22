@@ -799,11 +799,10 @@ namespace wordle
    \ V  V / (_) | | | (_| | |  __/
     \_/\_/ \___/|_|  \__,_|_|\___|
         •••••••••••••••••••••
-        •
-");
+        •");
             System.Console.WriteLine("\n\n\n\n");
-            Console.WriteLine(@"                                   
-        ••••••••••••••••••••••               
+            System.Console.WriteLine(@"                                                                                                 
+        •••••••••••••••••••••               
         ");
             Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
@@ -844,7 +843,7 @@ namespace wordle
             }
             Console.ForegroundColor = ConsoleColor.White;
             System.Console.Write(@"
-        ••••••••••••••••••••• 
+        •••••••••••••••••••••                         
         •••••••••••••••••••••                         
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
@@ -868,11 +867,10 @@ namespace wordle
    \ V  V / (_) | | | (_| | |  __/
     \_/\_/ \___/|_|  \__,_|_|\___|
         •••••••••••••••••••••
-        •
-");
+        •");
             System.Console.WriteLine("\n\n\n\n");
-            Console.WriteLine(@"                                             
-        ••••••••••••••••••••••               
+            System.Console.WriteLine(@"                                                                                                 
+        •••••••••••••••••••••               
         ");
             Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
@@ -913,7 +911,7 @@ namespace wordle
             }
             Console.ForegroundColor = ConsoleColor.White;
             System.Console.Write(@"
-        ••••••••••••••••••••• 
+        •••••••••••••••••••••                         
         •••••••••••••••••••••                         
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
