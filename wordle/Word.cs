@@ -106,13 +106,13 @@ namespace wordle
         Genius! You got it in 1 try! Tap ENTER to continue the game  ");
                                     Console.ReadLine();
                                     Console.Clear();
-                                    PlayAgain();
+                                    PlayAgain(); //user is prompt if they want to play again
                                 }
                                 else // if not then user will go to next available attempt
                                 {
                                     Console.Clear();
                                     Check(ref correctWord, ref userGuess);
-                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words); // displays attempt relsut and ask for next attempt
+                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words); // displays attempt result and ask for next attempt
                                 }
                             }
                             else
