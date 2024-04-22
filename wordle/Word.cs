@@ -2,8 +2,8 @@ namespace wordle
 {
     public class Word
     {
-        const int MAX_WORDS = 6000;
-        string[] colorWordOne = new string[5];
+        const int MAX_WORDS = 6000; //max amount of words
+        string[] colorWordOne = new string[5]; //will be used to coler words for each user guess
         string[] colorWordTwo = new string[5];
         string[] colorWordThree = new string[5];
         string[] colorWordFour = new string[5];
@@ -15,40 +15,40 @@ namespace wordle
         {
             correctWord = " ";
         }
+        
+/* 
+        the method below is a process to store all the 5 letter words from a file called wordle.txt with has all the words as api,
+        but it will be used to check if user guess word "exist as a 5 letter word in English"
+
+*/
         public void Wordle(string correctWord)
         {
             this.correctWord = correctWord;
             Console.Clear();
-            string[] words = new string[MAX_WORDS];
+            string[] words = new string[MAX_WORDS]; //set the array max to 6000
             int count = 0;
-            StreamReader inFile = new StreamReader("wordle.txt");
-            string line = inFile.ReadLine();
+            StreamReader inFile = new StreamReader("wordle.txt"); // open file
+            string line = inFile.ReadLine(); // read file
             while (line != null)
             {
-                string[] temp = line.Split(' ');
+                string[] temp = line.Split(' '); // process it 
                 words[count] = temp[0];
                 count++;
                 line = inFile.ReadLine();
             }
-            inFile.Close();
-
-            Random rnd = new Random();
-            int randomIndex = rnd.Next(0, count);
-            words[randomIndex].ToUpper();
-            BeganWordle(ref words, randomIndex);
+            inFile.Close(); //Close file
+            BeganWordle(ref correctWord, ref words);
         }
 
-        public void BeganWordle(ref string[] words, int randomIndex)
+        // Beginning of the game
+        public void BeganWordle(ref string correctWord, ref string[] words)
         {
             Console.Clear();
-            string correctWord = words[randomIndex];
-            System.Console.WriteLine("Guess a 5 letter word in 6 attempts! Press ENTER to begin");
-            Console.ReadLine();
-            Console.Clear();
-            AttemptOne(ref words, ref correctWord, ref randomIndex);
+            AttemptOne(ref words, ref correctWord);
         }
 
-        public void AttemptOne(ref string[] words, ref string correctWord, ref int randomIndex)
+        // This is were real wordle begans
+        public void AttemptOne(ref string[] words, ref string correctWord)
         {
             Console.Clear();
             System.Console.Write(@"
@@ -80,65 +80,70 @@ namespace wordle
             System.Console.Write(@"
         Attempt 1");
             Console.ForegroundColor = ConsoleColor.DarkRed;
+            //Asks user for a word
             System.Console.Write($@"
         Write Here: "); Console.ResetColor();
-            string userGuess = Console.ReadLine().ToUpper();
-            if (userGuess.Length != 5)
+            string userGuess = Console.ReadLine().ToUpper(); //sets userGuess to all Capital letters to match api word and wordle.txt
+            if (userGuess.Length != 5) //if userGuess is not 5 letters 
             {
-                AttemptOne(ref words, ref correctWord, ref randomIndex);
+                AttemptOne(ref words, ref correctWord);
             }
-            else
+            else //if userGuess is a 5 letter word
             {
-                char[] chars = new char[10];
-                chars = userGuess.ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                char[] chars = new char[10]; 
+                chars = userGuess.ToCharArray(); //userGuess is not split into characters
+                for (int i = 0; i < chars.Length; i++) // checks each character (letter)
                 {
                     char c = chars[i];
-                    if (char.IsLetter(c))
+                    if (char.IsLetter(c)) //if all characters in userGuess is a letter then it goes to next check
                     {
                         for (int j = 0; j < words.Length; j++)
                         {
-                            if (words.Any(word => word == userGuess))
+                            if (words.Any(word => word == userGuess)) //if userGuess exist in wordle.txt to make sure it is a real word
                             {
-                                if (userGuess.ToUpper() == correctWord)
+                                if (userGuess.ToUpper() == correctWord) // check if userGuess matches correct word
                                 {
                                     Console.Clear();
-                                    Check(ref correctWord, ref userGuess);
-                                    DisplayAttemptOneCorrect(ref userGuess, ref randomIndex);
+                                    Check(ref correctWord, ref userGuess); //check for what letters are in correct possition or not, follows real Wordle rules
+                                    DisplayAttemptOneCorrect(ref userGuess); // displays user the result
                                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                                     System.Console.Write(@"
-        Wow! You got it in 1 try! Tap ENTER to continue the game  ");
+        Genius! You got it in 1 try! Tap ENTER to continue the game  ");
                                     Console.ReadLine();
                                     Console.Clear();
                                     Console.ResetColor();
-                                    // PlayAgain();
+                                    // PlayAgain(); // method that will ask user if they want to play again or not
+                                    Environment.Exit(0);
                                 }
-                                else
+                                else // if not then user will go to next available attempt
                                 {
-                                    Console.Clear();
+                                    Console.Clear(); 
                                     Check(ref correctWord, ref userGuess);
-                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words, ref randomIndex);
+                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words); // displays attempt relsut and ask for next attempt
                                 }
                             }
                             else
                             {
-                                AttemptOne(ref words, ref correctWord, ref randomIndex);
+                                AttemptOne(ref words, ref correctWord); //if userGuess word does not exist in English language
                             }
                         }
                     }
-                    else
+                    else // if one of the characters in userGuess is not a letter
                     {
-                        AttemptOne(ref words, ref correctWord, ref randomIndex);
+                        AttemptOne(ref words, ref correctWord);
                     }
                 }
             }
         }
 
+        //method that checks each letter and matches it against correct letter positions and colors it according to real Wordle rules
         private void Check(ref string correctWord, ref string userGuess)
         {
+            //*colorWordOne (or Two ... etc) will be used to color letters in future method
             // Dictionary to store letter counts in the answer word
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
-            foreach (char letter in correctWord)
+            //counts numer of letters 
+            foreach (char letter in correctWord) 
             {
                 if (answerCharCounts.ContainsKey(letter))
                 {
@@ -149,19 +154,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
+            //Checks each userGuess letter compared to correct word letter positions and if it is there
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuess[i];
                 char answerLetter = correctWord[i];
-
-                // Handle correct position (Green)
-                if (guessLetter == answerLetter)
+                if (guessLetter == answerLetter) // if letter match position and actual letter for userGuess and correctWord
                 {
-                    colorWordOne[i] = "G";
-                    answerCharCounts[guessLetter]--;
+                    colorWordOne[i] = "G"; // will be set to G for green colot later
+                    answerCharCounts[guessLetter]--; // minus guess letter 
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
+                // Handle correct letter in wrong position with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
                     // Check if there's already a green for this letter (meaning it's in the correct position)
@@ -174,17 +177,18 @@ namespace wordle
                             break;
                         }
                     }
-                    if (hasGreen)
+                    if (hasGreen) //If there's a green for this letter, mark the guessed letter as yellow (second occurrence)
                     {
                         colorWordOne[i] = "Y"; // Second occurrence becomes yellow
                     }
-                    else
+                    else //Otherwise, mark the guessed letter as yellow (first occurrence)
                     {
                         colorWordOne[i] = "Y"; // First occurrence becomes yellow
                     }
-                    answerCharCounts[guessLetter]--;
+                    answerCharCounts[guessLetter]--; //minus guess letter
                 }
-                else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
+                //Below handles repeated letters with occur multiple times in correctWord
+                else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1) //if letter repeats
                 {
                     // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
@@ -193,18 +197,18 @@ namespace wordle
                     {
                         if (colorWordOne[index] == "G" && index != i && userGuess[index] == guessLetter)
                         {
-                            if (!hasGreen)
+                            if (!hasGreen) //If the first occurrence of the guessed letter is already marked as green
                             {
                                 hasGreen = true;
                             }
-                            else if (!hasSecondGreen)
+                            else if (!hasSecondGreen) //If the second occurrence of the guessed letter is already marked as green
                             {
                                 hasSecondGreen = true;
                             }
-                            else
+                            else //If there are more than two green occurrences for the same letter, mark it as yellow (third occurrence)
                             {
                                 colorWordOne[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                return;
                             }
                         }
                     }
@@ -217,42 +221,45 @@ namespace wordle
                         colorWordOne[i] = "G"; // First occurrence becomes green
                     }
                 }
-                else
+                else // if userGuess letter is not in the correctWord
                 {
-                    colorWordOne[i] = "W"; // White (gray) for not in the word
+                    colorWordOne[i] = "W"; // W for white color
                 }
             }
         }
+
+        //This method below colors letters in a color set by the method above using G (green) Y (yellow) W (white)
         private ConsoleColor GetColorLetter(string colorWordOneChar)
         {
-            if (colorWordOneChar == "G")
+            if (colorWordOneChar == "G") //if a letter in colorWordOne was set to G it will become green
             {
                 return ConsoleColor.Green;
             }
-            else if (colorWordOneChar == "Y")
+            else if (colorWordOneChar == "Y") //if a letter in colorWordOne was set to Y it will become yellow
             {
                 return ConsoleColor.DarkYellow;
             }
-            else
+            else //if a letter in colorWordOne was set to W it will become white
             {
                 return ConsoleColor.White;
             }
         }
 
-        public void DisplayAttemptOneCorrect(ref string userGuess, ref int randomIndex)
+        //method below will show updated box with userGuess in it
+        public void DisplayAttemptOneCorrect(ref string userGuess)
         {
             Console.WriteLine(@"                             
         •••••••••••••••••••••                        
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 2); //sets the location (cordinates) in the terminal to fit it into ASCII 
             for (int i = 0; i < userGuess.Length; i++)
             {
-                Console.ForegroundColor = GetColorLetter(colorWordOne[i]);
+                Console.ForegroundColor = GetColorLetter(colorWordOne[i]); // goes to GetColorMethod
                 Console.Write(userGuess[i]);
                 Console.ResetColor();
-                Console.Write(" • ");
+                Console.Write(" • "); //add a bullet point between each letter
             }
             Console.ResetColor();
             System.Console.Write(@"
@@ -278,7 +285,7 @@ namespace wordle
         •••••••••••••••••••••");
         }
 
-        public void DisplayAttemptOne(ref string correctWord, ref string userGuess, ref string[] words, ref int randomIndex)
+        public void DisplayAttemptOne(ref string correctWord, ref string userGuess, ref string[] words)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -317,10 +324,11 @@ namespace wordle
         •••••••••••••••••••••                         
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
-            AttemptTwo(ref correctWord, ref userGuess, ref words, ref randomIndex);
+            AttemptTwo(ref correctWord, ref userGuess, ref words); //Displays attempt 2 while not clearing the console to make it feel like a real Wordle
         }
 
-        public void AttemptTwo(ref string correctWord, ref string userGuess, ref string[] words, ref int randomIndex)
+        //All things are very similar to AttemptOne stuff except in few places (with i comment) including AttemptSix
+        public void AttemptTwo(ref string correctWord, ref string userGuess, ref string[] words)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
@@ -331,8 +339,8 @@ namespace wordle
             string userGuessTwo = Console.ReadLine().ToUpper();
             if (userGuessTwo.Length != 5)
             {
-                DisplayAttemptOne(ref correctWord, ref userGuess, ref words, ref randomIndex);
-                AttemptTwo(ref correctWord, ref userGuess, ref words, ref randomIndex);
+                DisplayAttemptOne(ref correctWord, ref userGuess, ref words);
+                AttemptTwo(ref correctWord, ref userGuess, ref words);
             }
             else
             {
@@ -347,77 +355,49 @@ namespace wordle
                         {
                             if (words.Any(word => word == userGuessTwo))
                             {
-                                if (userGuessTwo == userGuess)
+                                if (userGuessTwo == userGuess) //checks if userGuess is same as one of the previous guesses, to ensure that that will not count as an attempt
                                 {
-                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words, ref randomIndex);
-                                    AttemptTwo(ref correctWord, ref userGuess, ref words, ref randomIndex);
+                                    DisplayAttemptOne(ref correctWord, ref userGuess, ref words);
+                                    AttemptTwo(ref correctWord, ref userGuess, ref words);
                                 }
                                 else
                                 {
                                     if (userGuessTwo.ToUpper() == correctWord)
                                     {
                                         Console.Clear();
-                                        DisplayAttemptTwoCorrect(ref correctWord, ref userGuess, ref userGuessTwo, ref randomIndex);
+                                        DisplayAttemptTwoCorrect(ref correctWord, ref userGuess, ref userGuessTwo);
                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                                         System.Console.Write(@"
-        Wow! You got it in 2 try's! Tap ENTER to exit the game  ");
+        Magnificent! You got it in 2 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                     else
                                     {
                                         Console.Clear();
-                                        DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+                                        DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
                                     }
                                 }
                             }
                             else
                             {
-                                DisplayAttemptOne(ref correctWord, ref userGuess, ref words, ref randomIndex);
-                                AttemptTwo(ref correctWord, ref userGuess, ref words, ref randomIndex);
+                                DisplayAttemptOne(ref correctWord, ref userGuess, ref words);
+                                AttemptTwo(ref correctWord, ref userGuess, ref words);
                             }
                         }
                     }
                     else
                     {
-                        DisplayAttemptOne(ref correctWord, ref userGuess, ref words, ref randomIndex);
-                        AttemptTwo(ref correctWord, ref userGuess, ref words, ref randomIndex);
+                        DisplayAttemptOne(ref correctWord, ref userGuess, ref words);
+                        AttemptTwo(ref correctWord, ref userGuess, ref words);
                     }
                 }
             }
         }
 
-        public void CheckTwo(ref string correctWord, ref string userGuessTwo)
+        private void CheckTwo(ref string correctWord, ref string userGuessTwo)
         {
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             foreach (char letter in correctWord)
@@ -431,22 +411,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuessTwo[i];
                 char answerLetter = correctWord[i];
-
-                // Handle correct position (Green)
                 if (guessLetter == answerLetter)
                 {
                     colorWordTwo[i] = "G";
                     answerCharCounts[guessLetter]--;
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     for (int index = 0; index < colorWordTwo.Length; index++)
                     {
@@ -456,22 +431,18 @@ namespace wordle
                             break;
                         }
                     }
-
                     if (hasGreen)
                     {
-                        colorWordTwo[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordTwo[i] = "Y";
                     }
                     else
                     {
-                        colorWordTwo[i] = "Y"; // First occurrence becomes yellow
+                        colorWordTwo[i] = "Y";
                     }
-
-
                     answerCharCounts[guessLetter]--;
                 }
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     bool hasSecondGreen = false;
                     for (int index = 0; index < colorWordTwo.Length; index++)
@@ -488,25 +459,23 @@ namespace wordle
                             }
                             else
                             {
-                                colorWordTwo[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                colorWordTwo[i] = "Y";
+                                return;
                             }
                         }
                     }
-
                     if (hasSecondGreen)
                     {
-                        colorWordTwo[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordTwo[i] = "Y";
                     }
                     else if (hasGreen)
                     {
-                        colorWordTwo[i] = "G"; // First occurrence becomes green
+                        colorWordTwo[i] = "G";
                     }
-
                 }
                 else
                 {
-                    colorWordTwo[i] = "W"; // White (gray) for not in the word
+                    colorWordTwo[i] = "W";
                 }
             }
         }
@@ -527,7 +496,7 @@ namespace wordle
             }
         }
 
-        public void DisplayAttemptTwoCorrect(ref string correctWord, ref string userGuess, ref string userGuessTwo, ref int randomIndex)
+        public void DisplayAttemptTwoCorrect(ref string correctWord, ref string userGuess, ref string userGuessTwo)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -578,7 +547,7 @@ namespace wordle
         •••••••••••••••••••••");
         }
 
-        public void DisplayAttemptTwo(ref string correctWord, ref string[] words, ref string userGuess, ref string userGuessTwo, ref int randomIndex)
+        public void DisplayAttemptTwo(ref string correctWord, ref string[] words, ref string userGuess, ref string userGuessTwo)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -600,7 +569,6 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            // CheckTwo(ref colorWordTwo, ref words, ref correctWord, ref userGuessTwo);
             Console.SetCursorPosition(10, 4);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
@@ -628,10 +596,10 @@ namespace wordle
         •••••••••••••••••••••                         
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
-            AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+            AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
         }
 
-        public void AttemptThree(ref string correctWord, ref string[] words, ref string userGuess, ref string userGuessTwo, ref int randomIndex)
+        public void AttemptThree(ref string correctWord, ref string[] words, ref string userGuess, ref string userGuessTwo)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
@@ -642,8 +610,8 @@ namespace wordle
             string userGuessThree = Console.ReadLine().ToUpper();
             if (userGuessThree.Length != 5)
             {
-                DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
-                AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+                DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
+                AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
             }
             else
             {
@@ -660,8 +628,8 @@ namespace wordle
                             {
                                 if (userGuessThree == userGuess || userGuessThree == userGuessTwo)
                                 {
-                                    DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
-                                    AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+                                    DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
+                                    AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
                                 }
                                 else
                                 {
@@ -669,68 +637,40 @@ namespace wordle
                                     {
                                         Console.Clear();
                                         DisplayAttemptThreeCorrect(ref correctWord, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree);
                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                                         System.Console.Write(@"
-        Wow! You got it in 3 try's! Tap ENTER to exit the game  ");
+        Impressive! You got it in 3 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                     else
                                     {
                                         Console.Clear();
                                         DisplayAttemptThree(ref correctWord, ref words,
-        ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+        ref userGuess, ref userGuessTwo, ref userGuessThree);
                                     }
                                 }
                             }
                             else
                             {
-                                DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
-                                AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+                                DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
+                                AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
                             }
                         }
                     }
                     else
                     {
-                        DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
-                        AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref randomIndex);
+                        DisplayAttemptTwo(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
+                        AttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo);
                     }
                 }
             }
         }
 
-        public void CheckThree(ref string correctWord, ref string userGuessThree)
+        private void CheckThree(ref string correctWord, ref string userGuessThree)
         {
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             foreach (char letter in correctWord)
@@ -744,22 +684,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuessThree[i];
                 char answerLetter = correctWord[i];
-
-                // Handle correct position (Green)
                 if (guessLetter == answerLetter)
                 {
                     colorWordThree[i] = "G";
                     answerCharCounts[guessLetter]--;
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     for (int index = 0; index < colorWordThree.Length; index++)
                     {
@@ -769,22 +704,18 @@ namespace wordle
                             break;
                         }
                     }
-
                     if (hasGreen)
                     {
-                        colorWordThree[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordThree[i] = "Y";
                     }
                     else
                     {
-                        colorWordThree[i] = "Y"; // First occurrence becomes yellow
+                        colorWordThree[i] = "Y";
                     }
-
-
                     answerCharCounts[guessLetter]--;
                 }
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     bool hasSecondGreen = false;
                     for (int index = 0; index < colorWordThree.Length; index++)
@@ -801,25 +732,23 @@ namespace wordle
                             }
                             else
                             {
-                                colorWordThree[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                colorWordThree[i] = "Y";
+                                return;
                             }
                         }
                     }
-
                     if (hasSecondGreen)
                     {
-                        colorWordThree[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordThree[i] = "Y";
                     }
                     else if (hasGreen)
                     {
-                        colorWordThree[i] = "G"; // First occurrence becomes green
+                        colorWordThree[i] = "G";
                     }
-
                 }
                 else
                 {
-                    colorWordThree[i] = "W"; // White (gray) for not in the word
+                    colorWordThree[i] = "W";
                 }
             }
         }
@@ -841,7 +770,7 @@ namespace wordle
         }
 
         public void DisplayAttemptThreeCorrect(ref string correctWord, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -903,7 +832,7 @@ namespace wordle
         }
 
         public void DisplayAttemptThree(ref string correctWord, ref string[] words,
-        ref string userGuess, ref string userGuessTwo, ref string userGuessThree, ref int randomIndex)
+        ref string userGuess, ref string userGuessTwo, ref string userGuessThree)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -963,11 +892,11 @@ namespace wordle
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
             AttemptFour(ref correctWord, ref words,
-        ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+        ref userGuess, ref userGuessTwo, ref userGuessThree);
         }
 
         public void AttemptFour(ref string correctWord, ref string[] words,
-        ref string userGuess, ref string userGuessTwo, ref string userGuessThree, ref int randomIndex)
+        ref string userGuess, ref string userGuessTwo, ref string userGuessThree)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
@@ -978,9 +907,9 @@ namespace wordle
             string userGuessFour = Console.ReadLine().ToUpper();
             if (userGuessFour.Length != 5)
             {
-                DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree);
                 AttemptFour(ref correctWord, ref words,
-        ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+        ref userGuess, ref userGuessTwo, ref userGuessThree);
             }
             else
             {
@@ -997,9 +926,9 @@ namespace wordle
                             {
                                 if (userGuessFour == userGuess || userGuessFour == userGuessTwo || userGuessFour == userGuessThree)
                                 {
-                                    DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                                    DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree);
                                     AttemptFour(ref correctWord, ref words,
-                                    ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                                    ref userGuess, ref userGuessTwo, ref userGuessThree);
                                 }
                                 else
                                 {
@@ -1007,70 +936,42 @@ namespace wordle
                                     {
                                         Console.Clear();
                                         DisplayAttemptFourCorrect(ref correctWord, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                                         System.Console.Write(@"
-        Wow! You got it in 3 try's! Tap ENTER to exit the game  ");
+        Splendid! You got it in 4 try's! Tap ENTER to exit the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                     else
                                     {
                                         Console.Clear();
                                         DisplayAttemptFour(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                                     }
                                 }
                             }
                             else
                             {
-                                DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                                DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree);
                                 AttemptFour(ref correctWord, ref words,
-                                ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                                ref userGuess, ref userGuessTwo, ref userGuessThree);
                             }
                         }
                     }
                     else
                     {
-                        DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                        DisplayAttemptThree(ref correctWord, ref words, ref userGuess, ref userGuessTwo, ref userGuessThree);
                         AttemptFour(ref correctWord, ref words,
-                        ref userGuess, ref userGuessTwo, ref userGuessThree, ref randomIndex);
+                        ref userGuess, ref userGuessTwo, ref userGuessThree);
                     }
                 }
             }
         }
 
-        public void CheckFour(ref string correctWord, ref string userGuessFour)
+        private void CheckFour(ref string correctWord, ref string userGuessFour)
         {
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             foreach (char letter in correctWord)
@@ -1084,21 +985,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuessFour[i];
                 char answerLetter = correctWord[i];
-                // Handle correct position (Green)
                 if (guessLetter == answerLetter)
                 {
                     colorWordFour[i] = "G";
                     answerCharCounts[guessLetter]--;
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     for (int index = 0; index < colorWordFour.Length; index++)
                     {
@@ -1110,17 +1007,16 @@ namespace wordle
                     }
                     if (hasGreen)
                     {
-                        colorWordFour[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordFour[i] = "Y";
                     }
                     else
                     {
-                        colorWordFour[i] = "Y"; // First occurrence becomes yellow
+                        colorWordFour[i] = "Y";
                     }
                     answerCharCounts[guessLetter]--;
                 }
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     bool hasSecondGreen = false;
                     for (int index = 0; index < colorWordFour.Length; index++)
@@ -1137,23 +1033,23 @@ namespace wordle
                             }
                             else
                             {
-                                colorWordFour[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                colorWordFour[i] = "Y";
+                                return;
                             }
                         }
                     }
                     if (hasSecondGreen)
                     {
-                        colorWordFour[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordFour[i] = "Y";
                     }
                     else if (hasGreen)
                     {
-                        colorWordFour[i] = "G"; // First occurrence becomes green
+                        colorWordFour[i] = "G";
                     }
                 }
                 else
                 {
-                    colorWordFour[i] = "W"; // White (gray) for not in the word
+                    colorWordFour[i] = "W";
                 }
             }
         }
@@ -1175,7 +1071,7 @@ namespace wordle
         }
 
         public void DisplayAttemptFourCorrect(ref string correctWord, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -1247,7 +1143,7 @@ namespace wordle
         }
 
         public void DisplayAttemptFour(ref string correctWord, ref string[] words, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -1317,11 +1213,11 @@ namespace wordle
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
             AttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
         }
 
         public void AttemptFive(ref string correctWord, ref string[] words, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
@@ -1333,9 +1229,9 @@ namespace wordle
             if (userGuessFive.Length != 5)
             {
                 DisplayAttemptFour(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                 AttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
             }
             else
             {
@@ -1354,9 +1250,9 @@ namespace wordle
                                 || userGuessFive == userGuessFour)
                                 {
                                     DisplayAttemptFour(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                                     AttemptFive(ref correctWord, ref words, ref userGuess,
-                            ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+                            ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                                 }
                                 else
                                 {
@@ -1364,72 +1260,44 @@ namespace wordle
                                     {
                                         Console.Clear();
                                         DisplayAttemptFiveCorrect(ref correctWord, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                                         System.Console.Write(@"
-        Wow! You got it in 5 try's! Tap ENTER to continue the game  ");
+        Great! You got it in 5 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                     else
                                     {
                                         Console.Clear();
                                         DisplayAttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                                     }
                                 }
                             }
                             else
                             {
                                 DisplayAttemptFour(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                                 AttemptFive(ref correctWord, ref words, ref userGuess,
-                        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+                        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                             }
                         }
                     }
                     else
                     {
                         DisplayAttemptFour(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                         AttemptFive(ref correctWord, ref words, ref userGuess,
-                ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref randomIndex);
+                ref userGuessTwo, ref userGuessThree, ref userGuessFour);
                     }
                 }
             }
         }
 
-        public void CheckFive(ref string correctWord, ref string userGuessFive)
+        private void CheckFive(ref string correctWord, ref string userGuessFive)
         {
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             foreach (char letter in correctWord)
@@ -1443,21 +1311,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuessFive[i];
                 char answerLetter = correctWord[i];
-                // Handle correct position (Green)
                 if (guessLetter == answerLetter)
                 {
                     colorWordFive[i] = "G";
                     answerCharCounts[guessLetter]--;
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     for (int index = 0; index < colorWordFive.Length; index++)
                     {
@@ -1469,17 +1333,16 @@ namespace wordle
                     }
                     if (hasGreen)
                     {
-                        colorWordFive[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordFive[i] = "Y";
                     }
                     else
                     {
-                        colorWordFive[i] = "Y"; // First occurrence becomes yellow
+                        colorWordFive[i] = "Y";
                     }
                     answerCharCounts[guessLetter]--;
                 }
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     bool hasSecondGreen = false;
                     for (int index = 0; index < colorWordFive.Length; index++)
@@ -1496,23 +1359,23 @@ namespace wordle
                             }
                             else
                             {
-                                colorWordFive[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                colorWordFive[i] = "Y";
+                                return;
                             }
                         }
                     }
                     if (hasSecondGreen)
                     {
-                        colorWordFive[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordFive[i] = "Y";
                     }
                     else if (hasGreen)
                     {
-                        colorWordFive[i] = "G"; // First occurrence becomes green
+                        colorWordFive[i] = "G";
                     }
                 }
                 else
                 {
-                    colorWordFive[i] = "W"; // White (gray) for not in the word
+                    colorWordFive[i] = "W";
                 }
             }
         }
@@ -1534,7 +1397,7 @@ namespace wordle
         }
 
         public void DisplayAttemptFiveCorrect(ref string correctWord, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -1616,7 +1479,7 @@ namespace wordle
         }
 
         public void DisplayAttemptFive(ref string correctWord, ref string[] words, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive)
         {
             Console.Clear();
             Console.WriteLine(@"                             
@@ -1696,11 +1559,11 @@ namespace wordle
         •   •   •   •   •   •                         
         •••••••••••••••••••••");
             AttemptSix(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
         }
-
+        //In this method there will be sligth difference from other attempts 
         public void AttemptSix(ref string correctWord, ref string[] words, ref string userGuess,
-        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref int randomIndex)
+        ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
@@ -1712,9 +1575,9 @@ namespace wordle
             if (userGuessSix.Length != 5)
             {
                 DisplayAttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                 AttemptSix(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
             }
             else
             {
@@ -1733,116 +1596,62 @@ namespace wordle
                                 || userGuessSix == userGuessFour || userGuessSix == userGuessFive)
                                 {
                                     DisplayAttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                                     AttemptSix(ref correctWord, ref words, ref userGuess,
-                            ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+                            ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                                 }
                                 else
                                 {
                                     if (userGuessSix.ToUpper() == correctWord)
                                     {
                                         Console.Clear();
-                                        DisplayAttemptSixCorrect(ref correctWord, ref words, ref userGuess,
+                                        DisplayAttemptSixCorrect(ref correctWord, ref userGuess,
         ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref userGuessSix);
                                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                                         System.Console.Write(@"
-        Wow! You got it in 6 try's! Tap ENTER to continue  ");
+        Phew! You got it in 6 try's! Tap ENTER to continue the game ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                     else
                                     {
                                         Console.Clear();
-                                        DisplayAttemptSix(ref correctWord, ref words, ref userGuess,
+                                        DisplayAttemptSix(ref correctWord, ref userGuess,
         ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref userGuessSix);
+                                        Console.ForegroundColor = ConsoleColor.DarkRed;
                                         System.Console.Write(@"
         You failed! Tap ENTER to continue  ");
+                                        Console.ResetColor();
                                         Console.ReadLine();
                                         Console.Clear();
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                        Console.ResetColor();
-                                        string userInput = Console.ReadLine();
-                                        while (userInput != "2")
-                                        {
-                                            if (userInput == "1")
-                                            {
-                                                Console.Clear();
-                                                Game.Start();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                                Console.WriteLine("Good Bye");
-                                                Environment.Exit(0);
-                                            }
-                                            Console.ForegroundColor = ConsoleColor.Green;
-                                            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit))");
-                                            Console.ResetColor();
-                                            userInput = Console.ReadLine();
-                                        }
-                                        if (userInput == "2")
-                                        {
-                                            Console.Clear();
-                                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                                            Console.WriteLine("Good Bye");
-                                            Environment.Exit(0);
-                                        }
+                                        //PlayAgain(); // method that will ask user if they want to play again or not
+                                        Environment.Exit(0);
                                     }
                                 }
                             }
                             else
                             {
                                 DisplayAttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                                 AttemptSix(ref correctWord, ref words, ref userGuess,
-                        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+                        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                             }
                         }
                     }
                     else
                     {
                         DisplayAttemptFive(ref correctWord, ref words, ref userGuess,
-        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+        ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                         AttemptSix(ref correctWord, ref words, ref userGuess,
-                ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref randomIndex);
+                ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive);
                     }
                 }
             }
         }
 
-        public void CheckSix(ref string correctWord, ref string userGuessSix)
+        private void CheckSix(ref string correctWord, ref string userGuessSix)
         {
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             foreach (char letter in correctWord)
@@ -1856,21 +1665,17 @@ namespace wordle
                     answerCharCounts[letter] = 1;
                 }
             }
-
             for (int i = 0; i < correctWord.Length; i++)
             {
                 char guessLetter = userGuessSix[i];
                 char answerLetter = correctWord[i];
-                // Handle correct position (Green)
                 if (guessLetter == answerLetter)
                 {
                     colorWordSix[i] = "G";
                     answerCharCounts[guessLetter]--;
                 }
-                // Handle correct letter in wrong position (Yellow) with repeated letters
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 0)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     for (int index = 0; index < colorWordSix.Length; index++)
                     {
@@ -1882,17 +1687,16 @@ namespace wordle
                     }
                     if (hasGreen)
                     {
-                        colorWordSix[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordSix[i] = "Y";
                     }
                     else
                     {
-                        colorWordSix[i] = "Y"; // First occurrence becomes yellow
+                        colorWordSix[i] = "Y";
                     }
                     answerCharCounts[guessLetter]--;
                 }
                 else if (answerCharCounts.ContainsKey(guessLetter) && answerCharCounts[guessLetter] > 1)
                 {
-                    // Check if there's already a green for this letter (meaning it's in the correct position)
                     bool hasGreen = false;
                     bool hasSecondGreen = false;
                     for (int index = 0; index < colorWordSix.Length; index++)
@@ -1909,23 +1713,23 @@ namespace wordle
                             }
                             else
                             {
-                                colorWordSix[i] = "Y"; // Third occurrence becomes yellow
-                                return; // Exit the loop and function
+                                colorWordSix[i] = "Y";
+                                return;
                             }
                         }
                     }
                     if (hasSecondGreen)
                     {
-                        colorWordSix[i] = "Y"; // Second occurrence becomes yellow
+                        colorWordSix[i] = "Y";
                     }
                     else if (hasGreen)
                     {
-                        colorWordSix[i] = "G"; // First occurrence becomes green
+                        colorWordSix[i] = "G";
                     }
                 }
                 else
                 {
-                    colorWordSix[i] = "W"; // White (gray) for not in the word
+                    colorWordSix[i] = "W";
                 }
             }
         }
@@ -1946,8 +1750,7 @@ namespace wordle
             }
         }
 
-
-        public void DisplayAttemptSixCorrect(ref string correctWord, ref string[] words, ref string userGuess,
+        public void DisplayAttemptSixCorrect(ref string correctWord, ref string userGuess,
 ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref string userGuessSix)
         {
             Console.Clear();
@@ -2040,7 +1843,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••");
         }
 
-        public void DisplayAttemptSix(ref string correctWord, ref string[] words, ref string userGuess,
+        public void DisplayAttemptSix(ref string correctWord, ref string userGuess,
 ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref string userGuessSix)
         {
             Console.Clear();
@@ -2133,25 +1936,32 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••");
         }
 
-        private async void PlayAgain()
+        //Method below is used to ask users if they want to play again
+        public async void PlayAgain()
         {
+            Console.Clear();
             Console.Write("Would you like to play again? (1. Yes\t2. No (Exit)): ");
+            Console.ResetColor();
             string userInput = Console.ReadLine();
             if (userInput == "1")
             {
-                Game.Start();
+                await Game.Start(); //takes user back to where game will get a new word from api and the the whole proccess begins again
             }
             else if (userInput == "2")
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("Goodbye!");
-                Environment.Exit(0);
+                Console.ResetColor();
+                Environment.Exit(0); //exits the program 
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine("Invalid input. Please enter 1 or 2.");
+                Console.ResetColor();
                 PlayAgain();
+                Console.ResetColor();
             }
         }
     }
