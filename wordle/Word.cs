@@ -11,16 +11,19 @@ namespace wordle
         string[] colorWordSix = new string[5];
         string correctWord;
 
-        public Word()
-        {
-            correctWord = " ";
-        }
-        
-/* 
-        the method below is a process to store all the 5 letter words from a file called wordle.txt with has all the words as api,
-        but it will be used to check if user guess word "exist as a 5 letter word in English"
 
-*/
+
+        public async Task GetCorrectWord()
+        {
+            correctWord = await Game.Start();
+            Wordle(correctWord);
+        }
+
+        /* 
+            the method below is a process to store all the 5 letter words from a file called wordle.txt with has all the words as api,
+            but it will be used to check if user guess word "exist as a 5 letter word in English"
+        */
+
         public void Wordle(string correctWord)
         {
             this.correctWord = correctWord;
@@ -37,13 +40,6 @@ namespace wordle
                 line = inFile.ReadLine();
             }
             inFile.Close(); //Close file
-            BeganWordle(ref correctWord, ref words);
-        }
-
-        // Beginning of the game
-        public void BeganWordle(ref string correctWord, ref string[] words)
-        {
-            Console.Clear();
             AttemptOne(ref words, ref correctWord);
         }
 
@@ -51,27 +47,26 @@ namespace wordle
         public void AttemptOne(ref string[] words, ref string correctWord)
         {
             Console.Clear();
-            System.Console.Write(@"
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
         •••••••••••••••••••••
         •   •   •   •   •   •
-        •••••••••••••••••••••");
-            System.Console.Write(@"
+        •••••••••••••••••••••
         •••••••••••••••••••••
         •   •   •   •   •   •
-        •••••••••••••••••••••");
-            System.Console.Write(@"
+        •••••••••••••••••••••
         •••••••••••••••••••••
         •   •   •   •   •   •
-        •••••••••••••••••••••");
-            System.Console.Write(@"
+        •••••••••••••••••••••
         •••••••••••••••••••••
         •   •   •   •   •   •
-        •••••••••••••••••••••");
-            System.Console.Write(@"
+        •••••••••••••••••••••
         •••••••••••••••••••••
         •   •   •   •   •   •
-        •••••••••••••••••••••");
-            System.Console.Write(@"
+        •••••••••••••••••••••
         •••••••••••••••••••••
         •   •   •   •   •   •
         •••••••••••••••••••••");
@@ -90,7 +85,7 @@ namespace wordle
             }
             else //if userGuess is a 5 letter word
             {
-                char[] chars = new char[10]; 
+                char[] chars = new char[10];
                 chars = userGuess.ToCharArray(); //userGuess is not split into characters
                 for (int i = 0; i < chars.Length; i++) // checks each character (letter)
                 {
@@ -111,13 +106,11 @@ namespace wordle
         Genius! You got it in 1 try! Tap ENTER to continue the game  ");
                                     Console.ReadLine();
                                     Console.Clear();
-                                    Console.ResetColor();
-                                    // PlayAgain(); // method that will ask user if they want to play again or not
-                                    Environment.Exit(0);
+                                    PlayAgain();
                                 }
                                 else // if not then user will go to next available attempt
                                 {
-                                    Console.Clear(); 
+                                    Console.Clear();
                                     Check(ref correctWord, ref userGuess);
                                     DisplayAttemptOne(ref correctWord, ref userGuess, ref words); // displays attempt relsut and ask for next attempt
                                 }
@@ -143,7 +136,7 @@ namespace wordle
             // Dictionary to store letter counts in the answer word
             Dictionary<char, int> answerCharCounts = new Dictionary<char, int>();
             //counts numer of letters 
-            foreach (char letter in correctWord) 
+            foreach (char letter in correctWord)
             {
                 if (answerCharCounts.ContainsKey(letter))
                 {
@@ -248,12 +241,20 @@ namespace wordle
         //method below will show updated box with userGuess in it
         public void DisplayAttemptOneCorrect(ref string userGuess)
         {
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            Console.Clear();
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            System.Console.WriteLine(@"                                                                                                 
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2); //sets the location (cordinates) in the terminal to fit it into ASCII 
+            Console.SetCursorPosition(10, 6); //sets the location (cordinates) in the terminal to fit it into ASCII 
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Console.ForegroundColor = GetColorLetter(colorWordOne[i]); // goes to GetColorMethod
@@ -288,13 +289,20 @@ namespace wordle
         public void DisplayAttemptOne(ref string correctWord, ref string userGuess, ref string[] words)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            // System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                              
         •••••••••••••••••••••               
         ");
 
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Console.ForegroundColor = GetColorLetter(colorWordOne[i]);
@@ -371,8 +379,7 @@ namespace wordle
         Magnificent! You got it in 2 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                     else
                                     {
@@ -643,8 +650,7 @@ namespace wordle
         Impressive! You got it in 3 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                     else
                                     {
@@ -942,8 +948,7 @@ namespace wordle
         Splendid! You got it in 4 try's! Tap ENTER to exit the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                     else
                                     {
@@ -1266,8 +1271,7 @@ namespace wordle
         Great! You got it in 5 try's! Tap ENTER to continue the game  ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                     else
                                     {
@@ -1612,8 +1616,7 @@ namespace wordle
         Phew! You got it in 6 try's! Tap ENTER to continue the game ");
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                     else
                                     {
@@ -1626,8 +1629,7 @@ namespace wordle
                                         Console.ResetColor();
                                         Console.ReadLine();
                                         Console.Clear();
-                                        //PlayAgain(); // method that will ask user if they want to play again or not
-                                        Environment.Exit(0);
+                                        PlayAgain();
                                     }
                                 }
                             }
@@ -1937,31 +1939,35 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         }
 
         //Method below is used to ask users if they want to play again
-        public async void PlayAgain()
+        public async Task PlayAgain()
         {
             Console.Clear();
-            Console.Write("Would you like to play again? (1. Yes\t2. No (Exit)): ");
             Console.ResetColor();
-            string userInput = Console.ReadLine();
-            if (userInput == "1")
+            Console.WriteLine("Do you want to play again? (1. Yes\t2. No)");
+            string userChoice = Console.ReadLine();
+            while (userChoice != "2")
             {
-                await Game.Start(); //takes user back to where game will get a new word from api and the the whole proccess begins again
+                if (userChoice == "1")
+                {
+                    Console.Clear();
+                    GetCorrectWord().Wait(); // Start a new game without existing the game
+                }
+                else
+                {
+                    Console.Clear();
+                    PlayAgain();
+                }
+                Console.Clear();
+                Console.ResetColor();
+                Console.WriteLine("Do you want to play again? (1. Yes\t2. No)");
+                userChoice = Console.ReadLine();
             }
-            else if (userInput == "2")
+            if (userChoice == "2")
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Goodbye!");
-                Console.ResetColor();
-                Environment.Exit(0); //exits the program 
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Invalid input. Please enter 1 or 2.");
-                Console.ResetColor();
-                PlayAgain();
-                Console.ResetColor();
+                Console.WriteLine("Thank you for playing!");
+                Environment.Exit(0);
             }
         }
     }

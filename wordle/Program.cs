@@ -1,14 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using wordle;
+﻿using wordle;
 
 namespace YourNamespace
 {
     class Program
     {
-        static async Task Main()
+        public static async Task Main()
         {
-            await Game.Start();
+            Word word = new Word();
+            await word.GetCorrectWord();
         }
     }
 }
