@@ -47,7 +47,7 @@ namespace wordle
         public void AttemptOne(ref string[] words, ref string correctWord)
         {
             Console.Clear();
-            System.Console.WriteLine(@" __        __            _ _      
+            System.Console.Write(@" __        __            _ _      
  \ \      / /__  _ __ __| | | ___ 
   \ \ /\ / / _ \| '__/ _` | |/ _ \
    \ V  V / (_) | | | (_| | |  __/
@@ -70,7 +70,7 @@ namespace wordle
         •••••••••••••••••••••
         •   •   •   •   •   •
         •••••••••••••••••••••");
-            System.Console.WriteLine(correctWord);
+            // System.Console.WriteLine(correctWord);
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             System.Console.Write(@"
         Attempt 1");
