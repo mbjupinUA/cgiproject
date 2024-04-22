@@ -506,12 +506,19 @@ namespace wordle
         public void DisplayAttemptTwoCorrect(ref string correctWord, ref string userGuess, ref string userGuessTwo)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                             
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -525,7 +532,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -557,12 +564,19 @@ namespace wordle
         public void DisplayAttemptTwo(ref string correctWord, ref string[] words, ref string userGuess, ref string userGuessTwo)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                        
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -576,7 +590,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -779,12 +793,19 @@ namespace wordle
         ref string userGuessTwo, ref string userGuessThree)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                   
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -798,7 +819,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -812,7 +833,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -841,12 +862,19 @@ namespace wordle
         ref string userGuess, ref string userGuessTwo, ref string userGuessThree)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                             
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -860,7 +888,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -874,7 +902,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1079,12 +1107,19 @@ namespace wordle
         ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                           
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1098,7 +1133,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1112,7 +1147,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1126,7 +1161,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1151,12 +1186,19 @@ namespace wordle
         ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                        
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1170,7 +1212,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1184,7 +1226,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1198,7 +1240,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1404,12 +1446,19 @@ namespace wordle
         ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                       
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1423,7 +1472,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1437,7 +1486,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1451,7 +1500,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1465,7 +1514,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 10);
+            Console.SetCursorPosition(10, 14);
             for (int i = 0; i < userGuessFive.Length; i++)
             {
                 CheckFive(ref correctWord, ref userGuessFive);
@@ -1486,12 +1535,19 @@ namespace wordle
         ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                   
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1505,7 +1561,7 @@ namespace wordle
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1519,7 +1575,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1533,7 +1589,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1547,7 +1603,7 @@ namespace wordle
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 10);
+            Console.SetCursorPosition(10, 14);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFive(ref correctWord, ref userGuessFive);
@@ -1756,12 +1812,19 @@ namespace wordle
 ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref string userGuessSix)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                           
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1775,7 +1838,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1789,7 +1852,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1803,7 +1866,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1817,7 +1880,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 10);
+            Console.SetCursorPosition(10, 14);
             for (int i = 0; i < userGuessFive.Length; i++)
             {
                 CheckFive(ref correctWord, ref userGuessFive);
@@ -1831,7 +1894,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 12);
+            Console.SetCursorPosition(10, 16);
             for (int i = 0; i < userGuessSix.Length; i++)
             {
                 CheckSix(ref correctWord, ref userGuessSix);
@@ -1849,12 +1912,19 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
 ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, ref string userGuessFive, ref string userGuessSix)
         {
             Console.Clear();
-            Console.WriteLine(@"                             
-        •••••••••••••••••••••                        
-        •                                              
+            System.Console.WriteLine(@" __        __            _ _      
+ \ \      / /__  _ __ __| | | ___ 
+  \ \ /\ / / _ \| '__/ _` | |/ _ \
+   \ V  V / (_) | | | (_| | |  __/
+    \_/\_/ \___/|_|  \__,_|_|\___|
+        •••••••••••••••••••••
+        •
+");
+            System.Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(@"                                 
         ••••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 2);
+            Console.SetCursorPosition(10, 6);
             for (int i = 0; i < userGuess.Length; i++)
             {
                 Check(ref correctWord, ref userGuess);
@@ -1868,7 +1938,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •                                              
         •••••••••••••••••••••               
         ");
-            Console.SetCursorPosition(10, 4);
+            Console.SetCursorPosition(10, 8);
             for (int i = 0; i < userGuessTwo.Length; i++)
             {
                 CheckTwo(ref correctWord, ref userGuessTwo);
@@ -1882,7 +1952,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 6);
+            Console.SetCursorPosition(10, 10);
             for (int i = 0; i < userGuessThree.Length; i++)
             {
                 CheckThree(ref correctWord, ref userGuessThree);
@@ -1896,7 +1966,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 8);
+            Console.SetCursorPosition(10, 12);
             for (int i = 0; i < userGuessFour.Length; i++)
             {
                 CheckFour(ref correctWord, ref userGuessFour);
@@ -1910,7 +1980,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 10);
+            Console.SetCursorPosition(10, 14);
             for (int i = 0; i < userGuessFive.Length; i++)
             {
                 CheckFive(ref correctWord, ref userGuessFive);
@@ -1924,7 +1994,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
         •••••••••••••••••••••                         
         •                        
         •••••••••••••••••••••");
-            Console.SetCursorPosition(10, 12);
+            Console.SetCursorPosition(10, 16);
             for (int i = 0; i < userGuessSix.Length; i++)
             {
                 CheckSix(ref correctWord, ref userGuessSix);
@@ -1950,7 +2020,7 @@ ref string userGuessTwo, ref string userGuessThree, ref string userGuessFour, re
                 if (userChoice == "1")
                 {
                     Console.Clear();
-                    GetCorrectWord().Wait(); // Start a new game without existing the game
+                    GetCorrectWord().Wait(); // Start a new game without exiting the game
                 }
                 else
                 {
