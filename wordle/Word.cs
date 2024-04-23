@@ -11,8 +11,6 @@ namespace wordle
         string[] colorWordSix = new string[5];
         string correctWord;
 
-
-
         public async Task GetCorrectWord()
         {
             correctWord = await Game.Start();
@@ -1677,6 +1675,7 @@ namespace wordle
                                         Console.Clear();
                                         DisplayAttemptSix(ref correctWord, ref userGuess,
         ref userGuessTwo, ref userGuessThree, ref userGuessFour, ref userGuessFive, ref userGuessSix);
+                                        System.Console.WriteLine($"Correct word is: {correctWord}");
                                         Console.ForegroundColor = ConsoleColor.DarkRed;
                                         System.Console.Write(@"
         You failed! Tap ENTER to continue  ");
